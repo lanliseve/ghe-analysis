@@ -1,0 +1,18 @@
+- hosts: github_all
+  gather_facts: no
+  serial: 1
+  vars: 
+    export_script_name: export_test_repo.rb
+    data_file_name: data.json
+    import_script_name: importjson.py
+  tasks:
+  - debug:
+      msg: "{{ inventory_hostname }}"
+  - debug:
+      msg: "{{ ansible_host }}"
+  - name: copy script to github instance
+    copy: src={{ansible_home}}ruby/{{export_script_name}} dest={{github_home}}
+  - name: cleanup github server
+    file: path={{item.path}} state=absent
+    with_items:
+      - { path: '{{github_home}}{{export_script_name}}' }

@@ -1,0 +1,15 @@
+- hosts: "{{github_instance}}"
+  gather_facts: no
+  serial: 1
+  vars: 
+    export_script_name: export_test_repo.rb
+    data_file_name: data.json
+    import_script_name: import_test.py
+    do_export: true
+    do_import: true
+    print_debug_info: false
+  roles:
+  - role: export_from_github
+    when: do_export
+  - role: import_to_database
+    when: do_import

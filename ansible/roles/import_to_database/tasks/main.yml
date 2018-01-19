@@ -1,0 +1,16 @@
+---
+  - name: copy script to database server
+    copy: src={{ansible_home}}python/{{import_script_name}} dest={{database_home}}
+    delegate_to: dbserver
+  - name: copy json data to database server
+    copy: src={{ansible_home}}{{ inventory_hostname }}_{{data_file_name}} dest={{database_home}}
+    delegate_to: dbserver
+  - name: import data into database
+    shell: python {{database_home}}{{import_script_name}} {{database_home}}{{ inventory_hostname }}_{{data_file_name}} {{ inventory_hostname }} {{print_debug_info}}
+    delegate_to: dbserver
+  - name: cleanup database server
+    file: path={{item.path}} state=absent
+    with_items:
+      - { path: '{{database_home}}{{import_script_name}}' }
+      - { path: '{{ inventory_hostname }}_{{data_file_name}}'}
+    delegate_to: dbserver

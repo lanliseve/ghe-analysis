@@ -1,0 +1,18 @@
+hpe ansible_host=15.115.198.33 ansible_port=122 ansible_user=admin ansible_ssh_private_key_file="{{ansible_home}}sshkeys/ghe-migrator_HPE_id_rsa"
+
+partner ansible_host=16.101.210.144 ansible_port=122 ansible_user=admin ansible_ssh_private_key_file="{{ansible_home}}sshkeys/ghe-migrator_PARTNER_id_rsa"
+
+dxc ansible_host=15.140.1.88 ansible_port=122 ansible_user=admin ansible_ssh_private_key_file="{{ansible_home}}sshkeys/ghe-migrator_ES_id_rsa"
+
+seattle ansible_host=15.120.17.2 ansible_port=122 ansible_user=admin ansible_ssh_private_key_file="{{ansible_home}}sshkeys/ghe-migrator_STL_id_rsa"
+
+dbserver ansible_host=16.202.71.228 ansible_port=22 ansible_user=hos ansible_ssh_private_key_file="{{ansible_home}}sshkeys/dbserver.pem"
+
+[github_all]
+hpe
+partner
+dxc
+seattle
+
+
+

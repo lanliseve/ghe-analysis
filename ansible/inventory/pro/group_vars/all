@@ -1,0 +1,4 @@
+ansible_home: /tmp/jenkins/data/docker/workspace/github_export_import/
+#ansible_home: /tmp/ghe-analysis/
+github_home: /tmp/
+database_home: /tmp/database/

@@ -1,0 +1,17 @@
+---
+  - name: copy script to github instance
+    copy: src={{ansible_home}}ruby/{{export_script_name}} dest={{github_home}}
+  - name: export data from ghe-console and save as json, note the name in your ruby script must be the same as the name specified above
+    shell: cat {{github_home}}{{export_script_name}} | ghe-console -y > /dev/null
+  - name: change owner of generated json file to admin from git to get proper permission
+    shell: sudo chown admin:admin {{github_home}}{{data_file_name}}
+  - name: delete data file on ansible server if exist
+    file: path={{ansible_home}}{{ inventory_hostname }}_{{data_file_name}} state=absent
+    delegate_to: localhost
+  - name: copy to ansible server from github server
+    fetch: src={{github_home}}{{data_file_name}} dest={{ansible_home}}{{ inventory_hostname }}_{{data_file_name}} flat=yes
+  - name: cleanup github server
+    file: path={{item.path}} state=absent
+    with_items:
+      - { path: '{{github_home}}{{export_script_name}}' }
+      - { path: '{{github_home}}{{data_file_name}}'}
